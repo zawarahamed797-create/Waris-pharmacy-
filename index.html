@@ -7,69 +7,96 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primary: #005a8d; --accent: #00d2ff; --bg: #f4f7f6; --success: #27ae60; --danger: #e74c3c; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; overflow-x: hidden; }
         
+        /* Ticker */
         .ticker-wrap { background: var(--primary); color: white; padding: 6px 0; font-weight: bold; overflow: hidden; white-space: nowrap; }
         .ticker { display: inline-block; animation: marquee 25s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
+        /* Header */
         header { background: white; padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .logo { font-size: 24px; font-weight: 900; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .btn-prescription { background: var(--success); color: white; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; }
+        .logo { font-size: 20px; font-weight: 900; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .btn-prescription { background: var(--success); color: white; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 13px; }
 
+        /* Hero */
         .hero { 
             background: linear-gradient(45deg, rgba(0,90,141,0.9), rgba(0,210,255,0.8)), url('https://images.unsplash.com/photo-1586015555751-63bb77f4322a?q=80&w=1000'); 
-            height: 180px; background-size: cover; background-position: center; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; 
+            height: 160px; background-size: cover; background-position: center; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; padding: 0 10px;
         }
 
-        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
-        .section-title { font-size: 22px; font-weight: 800; color: var(--primary); margin: 30px 0 15px; border-right: 5px solid var(--danger); padding-right: 10px; text-align: right; }
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+        .section-title { font-size: 20px; font-weight: 800; color: var(--primary); margin: 25px 0 15px; border-right: 5px solid var(--danger); padding-right: 10px; text-align: right; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #eee; text-align: center; }
-        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .card img { width: 100%; height: 150px; object-fit: contain; padding: 10px; background: #fff; }
-        .card-body { padding: 15px; }
-        .card-title { font-size: 16px; font-weight: 700; margin: 5px 0; color: #444; }
-        .card-price { color: var(--primary); font-weight: 800; font-size: 18px; margin: 8px 0; }
-        .btn-add { width: 100%; background: var(--primary); color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        /* Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; text-align: center; }
+        .card img { width: 100%; height: 130px; object-fit: contain; padding: 10px; box-sizing: border-box; }
+        .card-body { padding: 10px; }
+        .card-title { font-size: 14px; font-weight: 700; margin: 5px 0; min-height: 40px; }
+        .card-price { color: var(--primary); font-weight: 800; font-size: 16px; margin-bottom: 8px; }
+        .btn-add { width: 100%; background: var(--primary); color: white; border: none; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; }
 
-        #cart-panel { position: fixed; right: -400px; top: 0; width: 380px; height: 100%; background: white; box-shadow: -5px 0 20px rgba(0,0,0,0.2); transition: 0.4s; z-index: 2000; padding: 20px; display: flex; flex-direction: column; }
+        /* --- Cart Panel Fixed --- */
+        #cart-panel { 
+            position: fixed; right: -400px; top: 0; width: 350px; height: 100%; 
+            background: white; box-shadow: -5px 0 25px rgba(0,0,0,0.2); 
+            transition: 0.4s ease; z-index: 2100; display: flex; flex-direction: column; 
+        }
         #cart-panel.active { right: 0; }
-        .cart-btn-float { position: fixed; bottom: 30px; right: 30px; background: var(--danger); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1500; font-size: 24px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .cart-count { position: absolute; top: 0; right: 0; background: var(--primary); color: white; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; display: flex; justify-content: center; align-items: center; }
-        .whatsapp-btn { background: #25D366; color: white; text-align: center; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: auto; display: block; border: none; width: 100%; font-size: 16px; cursor: pointer; }
 
-        @media (max-width: 500px) { #cart-panel { width: 100%; } }
+        .cart-header { 
+            padding: 20px; border-bottom: 2px solid #f1f1f1; 
+            display: flex; justify-content: space-between; align-items: center; background: #fff;
+        }
+        .cart-header h3 { margin: 0; font-size: 18px; color: var(--primary); }
+        .close-cart { font-size: 28px; cursor: pointer; border: none; background: none; color: #999; }
+
+        #cart-list { flex-grow: 1; overflow-y: auto; padding: 15px; }
+        
+        .cart-footer { padding: 20px; border-top: 1px solid #eee; background: #fdfdfd; }
+        .total-box { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 800; font-size: 18px; }
+
+        .whatsapp-btn { 
+            background: #25D366; color: white; text-align: center; padding: 14px; 
+            border-radius: 10px; text-decoration: none; font-weight: bold; 
+            display: block; border: none; width: 100%; font-size: 16px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Float Button */
+        .cart-btn-float { position: fixed; bottom: 20px; right: 20px; background: var(--danger); color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1500; font-size: 22px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .cart-count { position: absolute; top: -5px; right: -5px; background: var(--primary); color: white; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; display: flex; justify-content: center; align-items: center; border: 2px solid white; }
+
+        @media (max-width: 400px) { #cart-panel { width: 100%; } }
     </style>
 </head>
 <body>
 
 <div class="ticker-wrap">
     <div class="ticker">
-        🚑 Waris Pharmacy: 24/7 Delivery | 👶 Baby Milk & Diapers Available | ✨ Premium Skin Care Products | 📞 Order Now: +92 313 0781469
+        🚑 Waris Pharmacy: 24/7 Home Delivery | 👶 Baby Products | 💊 Genuine Medicines | 📞 Order: +92 313 0781469
     </div>
 </div>
 
 <header>
     <a href="#" class="logo"><i class="fas fa-plus-square"></i> WARIS PHARMACY</a>
-    <a href="https://wa.me/923130781469" class="btn-prescription"><i class="fas fa-file-medical"></i> پرچی بھیجیں</a>
+    <a href="https://wa.me/923130781469" class="btn-prescription">پرچی بھیجیں</a>
 </header>
 
 <div class="hero">
-    <h1>وارث فارمیسی اینڈ میڈیکل اسٹور</h1>
-    <p>صحت اور بچت ایک ساتھ</p>
+    <h2 style="margin:0;">وارث فارمیسی</h2>
+    <p style="margin:5px 0 0;">آپ کی صحت، ہمارا عزم</p>
 </div>
 
 <div class="container">
-    
-    <div class="section-title">عام ادویات (Medicines)</div>
+    <div class="section-title">ادویات (Medicines)</div>
     <div class="grid">
         <div class="card">
             <img src="https://m.media-amazon.com/images/I/51H-v0yZ7+L._AC_SL1000_.jpg" alt="Panadol">
             <div class="card-body">
-                <h3 class="card-title">Panadol CF Tablets</h3>
+                <div class="card-title">Panadol CF Tablets</div>
                 <div class="card-price">Rs. 350</div>
                 <button class="btn-add" onclick="addToCart('Panadol CF', 350)">Add to Cart</button>
             </div>
@@ -77,53 +104,24 @@
         <div class="card">
             <img src="https://images.jdmagicbox.com/quickquotes/images_main/brufen-400mg-tablet-222067718-4vj0wex1.jpg" alt="Brufen">
             <div class="card-body">
-                <h3 class="card-title">Brufen 400mg</h3>
+                <div class="card-title">Brufen 400mg</div>
                 <div class="card-price">Rs. 480</div>
                 <button class="btn-add" onclick="addToCart('Brufen 400mg', 480)">Add to Cart</button>
             </div>
         </div>
     </div>
 
-    <div class="section-title">بچوں کی دیکھ بھال (Baby Care)</div>
+    <div class="section-title">بچوں کے لیے (Baby Care)</div>
     <div class="grid">
         <div class="card">
             <img src="https://m.media-amazon.com/images/I/71Y-tL-P3AL._SL1500_.jpg" alt="Pampers">
             <div class="card-body">
-                <h3 class="card-title">Pampers Baby Dry (Large)</h3>
+                <div class="card-title">Pampers (Large)</div>
                 <div class="card-price">Rs. 2,450</div>
                 <button class="btn-add" onclick="addToCart('Pampers Large', 2450)">Add to Cart</button>
             </div>
         </div>
-        <div class="card">
-            <img src="https://m.media-amazon.com/images/I/61fS0X7-S5L._SL1000_.jpg" alt="Johnson">
-            <div class="card-body">
-                <h3 class="card-title">Johnson's Baby Lotion</h3>
-                <div class="card-price">Rs. 850</div>
-                <button class="btn-add" onclick="addToCart('Baby Lotion', 850)">Add to Cart</button>
-            </div>
-        </div>
     </div>
-
-    <div class="section-title">جلد کی حفاظت (Skin Care)</div>
-    <div class="grid">
-        <div class="card">
-            <img src="https://m.media-amazon.com/images/I/51v8uS7N-AL._SL1000_.jpg" alt="Ponds">
-            <div class="card-body">
-                <h3 class="card-title">Pond's Bright Beauty Face Wash</h3>
-                <div class="card-price">Rs. 550</div>
-                <button class="btn-add" onclick="addToCart('Ponds Face Wash', 550)">Add to Cart</button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://m.media-amazon.com/images/I/61U0t4eS-RL._SL1500_.jpg" alt="CeraVe">
-            <div class="card-body">
-                <h3 class="card-title">Moisturizing Cream (Generic)</h3>
-                <div class="card-price">Rs. 1,200</div>
-                <button class="btn-add" onclick="addToCart('Skin Moisturizer', 1200)">Add to Cart</button>
-            </div>
-        </div>
-    </div>
-
 </div>
 
 <div class="cart-btn-float" onclick="toggleCart()">
@@ -134,59 +132,79 @@
 <div id="cart-panel">
     <div class="cart-header">
         <h3>آپ کا آرڈر</h3>
-        <button onclick="toggleCart()" style="border:none; background:none; font-size:25px;">&times;</button>
+        <button class="close-cart" onclick="toggleCart()">&times;</button>
     </div>
-    <div id="cart-list" style="flex-grow:1; overflow-y:auto; padding:15px 0;"></div>
-    <div id="summary" style="padding:15px; border-top:1px solid #eee; display:none;">
-        <h4 style="display:flex; justify-content:space-between;">ٹوٹل بل: <span>Rs. <span id="total">0</span></span></h4>
+    
+    <div id="cart-list">
+        </div>
+
+    <div class="cart-footer" id="cart-footer" style="display:none;">
+        <div class="total-box">
+            <span>ٹوٹل بل:</span>
+            <span>Rs. <span id="total">0</span></span>
+        </div>
+        <button class="whatsapp-btn" onclick="sendWhatsAppOrder()">
+            <i class="fab fa-whatsapp"></i> آرڈر کنفرم کریں
+        </button>
     </div>
-    <button class="whatsapp-btn" onclick="sendWhatsAppOrder()">واٹس ایپ پر آرڈر بھیجیں</button>
 </div>
 
 <script>
     let cart = [];
-    function toggleCart() { document.getElementById('cart-panel').classList.toggle('active'); }
+
+    function toggleCart() {
+        document.getElementById('cart-panel').classList.toggle('active');
+    }
+
     function addToCart(name, price) {
         let item = cart.find(i => i.name === name);
         item ? item.quantity++ : cart.push({ name, price, quantity: 1 });
         updateUI();
         if (!document.getElementById('cart-panel').classList.contains('active')) toggleCart();
     }
+
     function updateUI() {
         const list = document.getElementById('cart-list');
         const count = document.getElementById('count');
         const totalDisp = document.getElementById('total');
-        const summary = document.getElementById('summary');
-        list.innerHTML = ""; let total = 0; let itemsCount = 0;
+        const footer = document.getElementById('cart-footer');
+        
+        list.innerHTML = "";
+        let total = 0;
+        let itemsCount = 0;
+
         if (cart.length === 0) {
-            list.innerHTML = "<p style='text-align:center; color:#999;'>کارٹ خالی ہے</p>";
-            summary.style.display = "none";
+            list.innerHTML = "<p style='text-align:center; color:#999; margin-top:50px;'>کارٹ خالی ہے</p>";
+            footer.style.display = "none";
         } else {
-            summary.style.display = "block";
+            footer.style.display = "block";
             cart.forEach(item => {
                 total += item.price * item.quantity;
                 itemsCount += item.quantity;
-                list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #f9f9f9;">
-                    <div><b>${item.name}</b><br><small>${item.quantity} x Rs.${item.price}</small></div>
-                    <b>Rs.${item.price * item.quantity}</b>
-                </div>`;
+                list.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #eee;">
+                        <div>
+                            <div style="font-weight:bold; font-size:14px;">${item.name}</div>
+                            <small>${item.quantity} x Rs.${item.price}</small>
+                        </div>
+                        <div style="font-weight:bold; color:var(--primary);">Rs.${item.price * item.quantity}</div>
+                    </div>
+                `;
             });
         }
         count.innerText = itemsCount;
         totalDisp.innerText = total.toLocaleString();
     }
+
     function sendWhatsAppOrder() {
-        if (cart.length === 0) return alert("کارٹ خالی ہے!");
         let text = "*WARIS PHARMACY - NEW ORDER*%0A------------------------------%0A";
-        let total = 0;
         cart.forEach(item => {
             text += `• ${item.name} (${item.quantity}) = Rs.${item.price * item.quantity}%0A`;
-            total += item.price * item.quantity;
         });
-        text += `------------------------------%0A*Total Bill: Rs. ${total.toLocaleString()}*`;
+        text += `------------------------------%0A*Total Bill: Rs. ${document.getElementById('total').innerText}*`;
         window.open(`https://wa.me/923130781469?text=${text}`, '_blank');
     }
 </script>
-</body>
-      </html>
 
+</body>
+</html>
